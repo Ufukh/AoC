@@ -5,10 +5,11 @@ from collections import Counter
 with open("inputd5.txt") as file:
     puzzle = file.readlines()
     mymap = np.zeros(shape=(1, 1), dtype=int)
-    points = []
-    points += [range(0, 5)]
-    points += range(6, 10)
-    print(points)
+    part1 = []
+    diag = []
+    count = 0
+    count1 = 0
+    print(len(puzzle))
     for coordinates in puzzle:
         coord = re.findall(r"\d+", coordinates)
         x1 = int(coord[0])
@@ -16,10 +17,26 @@ with open("inputd5.txt") as file:
         x2 = int(coord[2])
         y2 = int(coord[3])
         if x1 == x2 or y1 == y2:
-            points += [
+            part1 += [
                 (x, y)
                 for x in range(min(x1, x2), max(x1, x2) + 1)
                 for y in range(min(y1, y2), max(y1, y2) + 1)
             ]
-    p1 = [pt for pt in Counter(points).values() if pt > 1]
+        else:
+            print(x1, y1, x2, y2)
+            if x1 > x2:
+                if y1 < y2:
+                    diag += [(x, y2 - idx) for idx, x in enumerate(range(x2, x1 + 1))]
+                if y1 > y2:
+                    diag += [(x, y2 + idx) for idx, x in enumerate(range(x2, x1 + 1))]
+                # print(list(enumerate(range(x2, x1))))
+            else:
+                if y1 < y2:
+                    diag += [(x, y1 + idx) for idx, x in enumerate(range(x1, x2 + 1))]
+                if y1 > y2:
+                    diag += [(x, y1 - idx) for idx, x in enumerate(range(x1, x2 + 1))]
+    p1 = [pt for pt in Counter(part1).values() if pt > 1]
+    part1 += diag
+    p2 = [pt for pt in Counter(part1).values() if pt > 1]
     print(len(p1))
+    print(len(p2))

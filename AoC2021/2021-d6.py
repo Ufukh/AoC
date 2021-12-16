@@ -19,7 +19,8 @@ with open("inputd6.txt") as file:
     fishes[0, :] -= 1
     print(fishes[0, :])
     for i in range(0, 79):
-        nnewfish = np.count_nonzero(fishes[0, :] == 0)
-        fishes[fishes != 0] -= 1
-        fishes[fishes == 0] = 6
+        nnewfish = np.count_nonzero(fishes[0, :] == 0)  # count number of new fish
+        fishes[fishes[0, :] == 0] = 6  # reinitialize days for new fish
+        fishes[fishes[0, :] != 0] -= 1  # append
+
         np.append(fishes[[8] * nnewfish, [0] * nnewfish])

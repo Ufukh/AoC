@@ -20,7 +20,11 @@ with open("inputd6.txt") as file:
     print(fishes[0, :])
     for i in range(0, 79):
         nnewfish = np.count_nonzero(fishes[0, :] == 0)  # count number of new fish
-        fishes[fishes[0, :] == 0] = 6  # reinitialize days for new fish
-        fishes[fishes[0, :] != 0] -= 1  # append
-
-        np.append(fishes[[8] * nnewfish, [0] * nnewfish])
+        fishes[fishes[:, 0] == 0, 1] = 1  # add flag to fish that gave birth
+        fishes[fishes[0, :] == 0] = 6  # reinitialize fish that gave birth
+        np.append(
+            fishes[[8] * nnewfish, [1] * nnewfish]
+        )  # append new lantern fish with flag
+        fishes[fishes[:, 1] == 1, 0] -= 1  # substract one to fish without flag
+        fishes[fishes[1, :] == 1] = 0  # remove flag
+    print(fishes.shape)

@@ -8,19 +8,18 @@ with open("inputd6.txt") as file:
     # print(test[1, :])
     print(np.count_nonzero(fishes[0, :] == 0))
     fishes[0, 0] = 0
-    print(fishes[0, :])
-    fishes[fishes[0, :] != 0] -= 1
-    print(fishes[0, :])
-    fishes[fishes[0, :] == 0] = 5
-    print(fishes[0, 0])
-    print(fishes[0, :])
+    # fishes[1, 0] = 1
+    fishes[1, fishes[0, :] == 0] = 1
+    print(fishes)
+    fishes[0, fishes[0, :] == 0] = 6
+    print(fishes)
+    fishes[0, fishes[1, :] != 1] -= 1
+    print(fishes)
 
-    print(fishes[0, :])
-    fishes[0, :] -= 1
-    print(fishes[0, :])
     for i in range(0, 79):
         nnewfish = np.count_nonzero(fishes[0, :] == 0)  # count number of new fish
-        fishes[fishes[:, 0] == 0, 1] = 1  # add flag to fish that gave birth
+        fishes[1, fishes[0, :] == 0] = 1  # add flag to fish that gave birth
+        fishes[0, fishes[0, :] == 0] = 6
         fishes[fishes[0, :] == 0] = 6  # reinitialize fish that gave birth
         np.append(
             fishes[[8] * nnewfish, [1] * nnewfish]
